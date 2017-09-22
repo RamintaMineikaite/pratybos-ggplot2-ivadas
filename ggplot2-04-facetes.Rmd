@@ -18,7 +18,7 @@ Sys.setlocale(locale = "Lithuanian")
 Facetės
 ============================================================================= 
 
-Funkcija facet_wrap()
+Funkcija facet_wrap() ~ - pagal
 ----------------------------------------------------------------------------- 
 ```{r}
 ggplot(data = mpg) + 
@@ -26,7 +26,7 @@ ggplot(data = mpg) +
   facet_wrap(~ class, nrow = 2)
 ```
 
-Funkcija facet_grid() - 1
+Funkcija facet_grid() - 1 wrap - kuo talpiau isdelioja, o grid - nurodom 2 kintamuosius kaip isdestyt
 ----------------------------------------------------------------------------- 
 ```{r}
 ggplot(data = mpg) + 
@@ -42,10 +42,12 @@ t <- ggplot(mpg, aes(cty, hwy)) +
 ```
 
 ```{r}
+# . - eilutese nieko nera
 t + facet_grid(. ~ fl)
 ```
 
 ```{r}
+#stulpeliuose nk nera
 t + facet_grid(year ~ .)
 ```
 
@@ -65,18 +67,28 @@ Užduotys: facetės
 1. Kas nutinka, jei facetes kuriame pagal tolydųjį kintamąjį?
 
 ```{r}
-
+# labai daug facečių sudaro
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_grid(~ cty)
 ```
 
 2. Ką rodo tušti langeliai įvykdžius funkciją `facet_grid(drv ~ cyl)`? Kaip jie susiję su šiuo grafiku: 
 ```{r}
+#tušti langeliai rodo, jog nėra toje skiltyje jokių taškų
 ggplot(data = mpg) + 
      geom_point(mapping = aes(x = drv, y = cyl)) 
+```
+```{r}
+ggplot(data = mpg) + 
+     geom_point(mapping = aes(x = cyl, y = drv)) +
+    facet_grid(drv ~ cyl)
 ```
 
 3. Ką daro žemiau pateiktas kodas? Ką reiškia taškas (`.`)?
 
 ```{r}
+#. reiškia, jog tik vienas stulpelis, šiuo atveju, bus
 ggplot(data = mpg) + 
     geom_point(mapping = aes(x = displ, y = hwy)) + 
     facet_grid(drv ~ .) 
@@ -84,15 +96,16 @@ ggplot(data = mpg) +
 ```
 
 ```{r}
+#., kad tik 1 eilutė, šiuo atveju, bus
 ggplot(data = mpg) + 
    geom_point(mapping = aes(x = displ, y = hwy)) + 
    facet_grid(. ~ cyl) 
 ```
 
 4. Patyrinėkite antrąją grafiko facetę (kodas žemiau).
-    a. Kokie privalumai naudoti facetes vs. išdėstymą spalvomis? 
-    b. Kokie trūkumai?
-    c. Kaip balansas tarp privalumų ir trūkumų pakistų, jei turėtumėte žymiai daugiau duomenų?
+    a. Kokie privalumai naudoti facetes vs. išdėstymą spalvomis? Jeigu daug taškų, spalvomis tampa nebeaišku, o jei dar daug kintamųjų reikšmių..
+    b. Kokie trūkumai? Negalime pastebėti tam tikrų tendencijų lengvai
+    c. Kaip balansas tarp privalumų ir trūkumų pakistų, jei turėtumėte žymiai daugiau duomenų? Jei žymiai daugiau, sunku būtų apžvelgt.
 
 
 
@@ -105,17 +118,25 @@ ggplot(data = mpg) +
 Spalvomis išdėstykite klasių pavadinimus
 ```{r}
 ggplot(data = mpg) + 
-    geom_point(mapping = aes(x = displ, y = hwy, color =  )) + 
+    geom_point(mapping = aes(x = displ, y = hwy, color = class )) + 
     facet_wrap(~ class, nrow = 2) 
 ```
 
 
 5. Perskaitykite funkcijos aprašymą: `?facet_wrap`.
-    a. Kokią funkciją atlieka `nrow`? 
-    b. Kokią funkciją atlieka `ncol`? 
-    c. Kurios kitos funkcijos kontroliuoja facečių išdėstymą? 
-    d. Kodėl funkcija `facet_grid()` neturi parametrų `nrow` ir `ncol`?
+    a. Kokią funkciją atlieka `nrow`? nurodo į kiek eilučių išdėstyti
+    b. Kokią funkciją atlieka `ncol`? nurodo į kiek stulpelių išdėstyti
+    c. Kurios kitos funkcijos kontroliuoja facečių išdėstymą? scales, as.table, dir
+    d. Kodėl funkcija `facet_grid()` neturi parametrų `nrow` ir `ncol`? Kadangi iįdėstoma pagal kintamuosius
+    
+```{r}
+?facet_wrap
+?facet_grid
+
+```
+    
 
 
 
-6. Kokiu atveju naudodami `facet_grid()` kintamąjį su didesniu kiekiu skirtingų reikšmių (faktoriaus lygių) turėtumėte atvaizduoti facečių stulpeliuose? Kodėl?
+6. Kokiu atveju naudodami `facet_grid()` kintamąjį su didesniu kiekiu skirtingų reikšmių (faktoriaus lygių) turėtumėte atvaizduoti facečių stulpeliuose? Kodėl? kad nebūtų į plotį labai išsiplėtęs.
+Visiškai nesuprantu, ko klausia

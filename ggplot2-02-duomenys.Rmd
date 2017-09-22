@@ -52,7 +52,12 @@ dplyr::select(mpg, displ, hwy)
 ```
 
 Pirmasis mūsų grafikas: sklaidos diagrama
+```{r}
+ggplot(data = mpg) 
+```
+# nieko nematome, nes nurodyti tik duomenys, nenurodytos asys, kaip duomenys braižyti, kokio tipo grafiką nubraižyti.
 ----------------------------------------------------------------------------- 
+# mapping -išdėstymas
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy))
@@ -61,6 +66,30 @@ ggplot(data = mpg) +
 
 Užduotys 1
 ----------------------------------------------------------------------------- 
+```{r}
+ggplot(data = mpg)
+```
+
+```{r}
+dim(mpg)
+?mpg
+summary(mpg)
+```
+## eilučių 234, stulpelių 11.
+##% drv reikšmė: f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = hwy, y = cyl))
+
+```
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = class, y = drv))
+
+```
+## Nenaudinga, nes tai kategoriniai kintamieji, sklaidos diagramas braižome tik skaitiniams kintamiesiems.
+
+
 
 ```{r}
 
@@ -68,6 +97,7 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = class))
 
 ``` 
+
 
 ```{r}
 
@@ -88,7 +118,7 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, shape = class))
 ```
 
-
+Kad taškai būtų mėlyni, jie turi būti už aes skliaustų.
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), color = "blue")

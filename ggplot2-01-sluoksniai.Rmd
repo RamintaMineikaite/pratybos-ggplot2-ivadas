@@ -3,7 +3,7 @@ title: "Sistemos ggplot2 pagrindai"
 subtitle: "Elementų sluoksniai"
 output: html_notebook
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup}

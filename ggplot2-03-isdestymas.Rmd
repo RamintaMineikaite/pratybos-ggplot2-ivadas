@@ -50,13 +50,13 @@ ggplot(data = mpg) +
 
 Estetinių savybių parinkimas rankiniu būdu
 ----------------------------------------------------------------------------- 
-
+# jei rankiniu budu, color iskelt is aes skliaustu
 ```{r}
 ggplot(data = mpg) + 
      geom_point(mapping = aes(x = displ, y = hwy), color = "blue") 
 ```
 
-Kaip nurodyti spalvas?
+Kaip nurodyti spalvas? colors() arba konsoleje demo(colors) parodys spalvas arba sesioliktainiai kodai. spalvos buna 
 ----------------------------------------------------------------------------- 
 Spalvų kodų parinkimas:
 https://www.w3schools.com/colors/colors_picker.asp
@@ -72,61 +72,111 @@ Užduotys: estetinis išdėstymas
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
 ```
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
+```
 
 2. Kurie lentelės `mpg` kintamieji yra kategoriniai? Kurie – tolydieji? (Užuomina: `?mpg`). Kaip tai pamatyti atspausdinus `mpg`?
 
 ```{r}
-
+?mpg
+str(mpg)
+#manufacturer -kategorinis
+#model -kategorinis
+#displ -tolydusis
+#year - diskretus
+#cyl - diskretus
+#trans - kategorinis
+#drv - kategorinis
+#cty - diskretusis
+#hwy - diskretusis
+#fl - kategorinis
+#class - kategorinis
 ```
 
 3. Pasirinkite tolydųjį kintamąjį ir atidėkite jo reikšmes šiose skalėse: `color`, `size`, `shape`. 
 
 ```{r}
-
+ggplot(data = mpg) + geom_point(mapping = aes(x=hwy, y=displ, color=displ))
 ```
-
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=hwy, y=displ, size= displ))
+```
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=hwy, y=displ, shape=displ))
+```
 4. Kuo šių estetikos elementų (`color`, `size`, `shape`) išdėstymas skiriasi, jei atidedame *kategorinį* vs. *tolydųjį* kintamąjį? 
 
 
 ```{r}
-
+#tolydžiesiems negalime naudoti shape
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y=manufacturer, shape=drv))
 ```
 ```{r}
-
+#jei prie color naudojamas kategorinis - atskiri spalvoti taškiukai, jei tolydusis - tolygiai spalvos pereinančios
+ggplot(data = mpg) + geom_point(mapping = aes(x=manufacturer, y=displ, color=displ))
+```
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=manufacturer, y=displ, color=class))
+# kai pasirenkam tolydu - spalvu juosta, o kai diskretus - atskiri
+```
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=manufacturer, y=displ, size=year))
+```
+```{r}
+# ar skiriasi kuo nors size, kai kategorinis ir tolydus?
+ggplot(data = mpg) + geom_point(mapping = aes(x=manufacturer, y=displ, size=displ))
 ```
 
-
-5. Ką daro estetikos elementas `stroke`? Su kuriomis formomis jis veikia? (Užuomina: naudokite `geom_point`).
+5. Ką daro estetikos elementas `stroke`? Su kuriomis formomis jis veikia? (Užuomina: naudokite `geom_point`). Stroke - dydi keicia. Nueit i help
 
 ```{r}
-
+#♣ stroke keičia taškiukų dydį
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y=cty ), stroke=5)
 ```
+# size - skaitiniais
+# color - kategoriniais ir kiekybinis
+# shape - kategorinis
+# stroke - su skai2iumi.
 
 
-6. Kas nutinka, jei naudojate kelias skales (pvz., `color`, `size`) su keliais skirtingais kintamaisiais?
+6. Kas nutinka, jei naudojate kelias skales (pvz., `color`, `size`) su keliais skirtingais kintamaisiais? 2 atskiros legendos
 
 ```{r}
-
+ggplot(data = mpg) + geom_point(mapping = aes(x=manufacturer, y=displ, color=fl, size = year))
 ```
+
 
 7. Kas nutinka, jei to paties kintamojo reikšmes atidedate keliose skirtingose skalėse (tarkime, `color` ir `shape`)?
 
 ```{r}
-
+#sudaromos 2 legendos, o jei ta patį kintamąjį, tai viena legenda
+ggplot(data = mpg) + geom_point(mapping = aes(x=manufacturer, y=displ, color=class, shape = fl))
 ```
 
 8. Kas nutinka, jei su tam tikra skale susiejate ne konkretaus kintamojo pavadinimą (pvz., `aes(colour = displ)`), o kokį nors veiksmą su tuo kintamuoju, tarkime `aes(colour = displ < 5)`?
 
 ```{r}
-
+#sudaroma spalvu legenda pagal teiginio teisinguma - FALSE, TRUE
+ggplot(data = mpg) + geom_point(mapping = aes(x=hwy, y=cty, color = displ <5))
 ```
 
-9. Nubraižykite grafiką ir jame rankiniu būdu parinkite spakvas naudodami:
+9. Nubraižykite grafiką ir jame rankiniu būdu parinkite spalvas naudodami:
     * spalvų pavadinimus (rašyti kabtėse);
     * šešioliktainius kodus (rašyti kabutėse);
     * spalvų numerius tarp 1 ir 8, be kabučių.
     
 ```{r}
-
+ggplot(data = mpg) + 
+    geom_point(mapping = aes(x=hwy, y=cty), color = "red")
 ```
     
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=hwy, y=cty), color = "#203090")
+```
+
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=hwy, y=cty), color = 2)
+```
+
